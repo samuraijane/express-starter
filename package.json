@@ -5,8 +5,11 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon .",
-    "start": "node .",
+    "build:dev": "sh build.sh dev react-starter",
+    "build:prod": "sh build.sh prod react-starter",
+    "dev": "export NODE_ENV=dev && nodemon .",
+    "prod": "export NODE_ENV=prod && node .",
+    "start": "npm run prod",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

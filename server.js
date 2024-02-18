@@ -11,12 +11,20 @@ const server = express();
 
 const { NODE_ENV, PORT } = process.env;
 
+server.use("/assets", express.static(__dirname + "/assets"));
 server.use("/build", express.static(__dirname + "/build"));
 
 server.get('/heartbeat', (req, res) => {
   res.json({
     "is": "working"
   });
+});
+
+server.get("/assets/*", (req, res) => {
+  res.json({
+    path: req.url,
+    message: "The requested asset is not found at the path you have provided."
+  })
 });
 
 server.get('*', (req, res) => {

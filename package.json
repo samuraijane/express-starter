@@ -8,6 +8,7 @@
     "build:all": "npm run build:dev && npm run build:prod",
     "build:dev": "sh build.sh dev react-starter",
     "build:prod": "sh build.sh prod react-starter",
+    "deploy": "sh deploy.sh",
     "dev": "export NODE_ENV=dev && nodemon .",
     "prod": "export NODE_ENV=prod && node .",
     "start": "npm run prod",

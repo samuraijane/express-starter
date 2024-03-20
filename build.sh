@@ -19,6 +19,11 @@ get_branch_name() {
 
 current_branch=$(get_branch_name)
 
+if [[ "$build_type" = "prod" && "$current_branch" != "prod" ]]
+  then
+    echo "BUILD FAILED\nYou must be on branch prod in order to execute a production build.\n" && exit 1
+fi
+
 echo "\n======================================================\nBEGIN\nCommencing $build_type build...\n======================================================\n"
 
 echo "\nCreating build directories on server and client...\n"

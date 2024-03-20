@@ -22,5 +22,5 @@ There are two branches – `main` and `prod`.
 - remote points to Heroku
 - includes everything in **build/** when pushed to Heroku
 - never push `prod` to GitHub
-- commits should be limited to the latest build files only; it would be highly unusual to make a commit to `prod` that you would not make to `main` first
+- commits should be limited to the latest build files only; commits made to `prod` that are not made to `main` first should be rare
 - never merge code from `main` to `prod`; instead use `git rebase main` when on `prod`

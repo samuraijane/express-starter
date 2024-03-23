@@ -13,8 +13,45 @@ if [[ "$current_branch" != "prod" ]]
     echo "DEPLOYMENT FAILED\nDeploying is allowed only while on branch prod.\n" && exit 1
 fi
 
-echo "\n======================================================\nBEGIN\nCommencing deployment to Heroku...\n======================================================\n"
+echo "\n======================================================\nBuilding version file..."
+get_hash() {
+  git rev-parse --short HEAD
+}
+get_hash_date() {
+  git log -n1 --pretty='format:%cd' --date=format:'%b %d %Y %H:%M:%S (%z)'
+}
 
-git add build/
-git commit -m "add latest build"
+# get hash and hash date for client
+cd ../react-starter
+_CH=$(get_hash)
+_CHD=$(get_hash_date)
+
+# get hash and hash date for server
+cd ../express-starter
+_SH=$(get_hash)
+_SHD=$(get_hash_date)
+
+create_version_summary() {
+  echo "$(
+    echo SERVER
+    echo "• "$_CH
+    echo "• "$_CHD
+    echo
+    echo CLIENT
+    echo "• "$_CH
+    echo "• "$_CHD
+  )"
+}
+
+version_summary=$(create_version_summary)
+
+echo "${version_summary}" >> version.txt
+
+echo "\n======================================================\nDeploying to Heroku..."
+
+git add build/ version.txt
+git commit -m "update to $_SH / $_CH"
+# If the push includes commits that were rebased from branch main, the
+# next line will fail. In this scenario, you must force push and do so
+# manually with `git push heroku +prod:main`.
 git push heroku prod:main

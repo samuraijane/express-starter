@@ -1,7 +1,5 @@
 #!/bin/sh
 
-server_dir=${PWD##*/}
-
 get_branch_name() {
   git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'
 }
@@ -38,14 +36,24 @@ create_version_summary() {
     echo "• "$_CHD
     echo
     echo CLIENT
-    echo "• "$_CH
-    echo "• "$_CHD
+    echo "• "$_SH
+    echo "• "$_SHD
   )"
 }
+# colors
+blue="\033[0;34m"
+reset="\033[0m"
 
 version_summary=$(create_version_summary)
-
-echo "${version_summary}" >> version.txt
+filename="version.txt"
+echo "$blue"
+if [ -f "$filename" ]
+  then
+    rm $filename
+    echo "Removing $filename since it already exists."
+fi
+echo "${version_summary}" >> $filename
+echo "Creating new $filename to capture latest version information.$reset"
 
 echo "\n======================================================\nDeploying to Heroku..."
 

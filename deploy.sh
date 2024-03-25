@@ -32,12 +32,12 @@ _SHD=$(get_hash_date)
 create_version_summary() {
   echo "$(
     echo SERVER
-    echo "• "$_CH
-    echo "• "$_CHD
-    echo
-    echo CLIENT
     echo "• "$_SH
     echo "• "$_SHD
+    echo
+    echo CLIENT
+    echo "• "$_CH
+    echo "• "$_CHD
   )"
 }
 # colors
@@ -57,9 +57,9 @@ echo "Creating new $filename to capture latest version information.$reset"
 
 echo "\n======================================================\nDeploying to Heroku..."
 
-git add build/ version.txt
-git commit -m "update to $_SH / $_CH"
+# git add build/ version.txt
+# git commit -m "update to $_SH / $_CH"
 # If the push includes commits that were rebased from branch main, the
 # next line will fail. In this scenario, you must force push and do so
 # manually with `git push heroku +prod:main`.
-git push heroku prod:main
+# git push heroku prod:main
